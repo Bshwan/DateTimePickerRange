@@ -95,7 +95,7 @@ class _OmniDateTimeRangePickerState extends State<OmniDateTimeRangePicker>
   /// Initial value: 1 day after current DateTime
   DateTime endDateTime = DateTime.now().add(const Duration(days: 1));
 
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int currentPage = 0;
   @override
   void initState() {
@@ -135,7 +135,7 @@ class _OmniDateTimeRangePickerState extends State<OmniDateTimeRangePicker>
                     child: GestureDetector(
                       onTap: () {
                         _pageController.animateToPage(0,
-                            duration: Duration(milliseconds: 250),
+                            duration: const Duration(milliseconds: 250),
                             curve: Curves.easeInOut);
                         setState(() {
                           currentPage = 0;
@@ -166,7 +166,7 @@ class _OmniDateTimeRangePickerState extends State<OmniDateTimeRangePicker>
                     child: GestureDetector(
                       onTap: () {
                         _pageController.animateToPage(1,
-                            duration: Duration(milliseconds: 250),
+                            duration: const Duration(milliseconds: 250),
                             curve: Curves.easeInOut);
 
                         setState(() {
@@ -205,7 +205,12 @@ class _OmniDateTimeRangePickerState extends State<OmniDateTimeRangePicker>
                 ),
                 child: PageView(
                   controller: _pageController,
-                  physics: ClampingScrollPhysics(),
+                  onPageChanged: (index) {
+                    setState(() {
+                      currentPage = index;
+                    });
+                  },
+                  physics: const ClampingScrollPhysics(),
                   children: [
                     /// Start date
                     StartDatePicker(
@@ -314,7 +319,7 @@ class StartDatePicker extends StatefulWidget {
   final Color? calendarTextColor;
   final TextStyle? timeSpinnerHighlightedTextStyle;
   final Function(DateTime) onDateChange;
-  StartDatePicker(
+  const StartDatePicker(
       {Key? key,
       required this.startDateTime,
       required this.startInitialDate,
